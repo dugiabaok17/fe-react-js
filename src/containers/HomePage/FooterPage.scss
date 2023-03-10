@@ -1,0 +1,33 @@
+.footer-page {
+    height: 250px;
+    padding: 0;
+    
+  .container-fluid {
+    width: 1300px;
+  }
+  .footer-content-right {
+    height: 250px;
+    
+    .header-logo {
+        background: url("../../assets/logo.svg") center no-repeat;
+        opacity: 0.95;
+        width: 190px;
+        height: 42px;
+        cursor: pointer;
+      }
+      
+      
+  }
+  .footer-content-center {
+    .footer-content-center-contact {
+        list-style-type: none;
+        li {
+            margin-bottom: 5px;
+            color: #49bce2;
+            
+        }
+      }
+  }
+  .footer-content-left {
+  }
+}

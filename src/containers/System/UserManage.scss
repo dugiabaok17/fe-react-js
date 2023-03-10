@@ -1,0 +1,68 @@
+.column-data-user {
+  line-height: 36px;
+}
+
+.btn-del {
+  border: none;
+}
+
+.btn-edit {
+  border: none;
+  background-color: transparent;
+  color: rgb(227, 148, 120);
+
+  &:hover {
+    color: green;
+    background-color: white;
+
+    box-shadow: 0 0 10px #d1e9d6;
+  }
+}
+
+.item-edit {
+  font-size: 20px;
+  line-height: 34px;
+}
+
+.item-del {
+  font-size: 20px;
+  line-height: 34px;
+}
+
+.btn-del {
+  border: none;
+  background-color: transparent;
+  color: rgb(221, 156, 132);
+
+  &:hover {
+    color: red;
+    box-shadow: 0 0 10px #d1e9d6;
+  }
+}
+
+.custom-location-icons {
+  position: relative;
+
+  .custom-location {
+    position: absolute;
+    right: 17px;
+    top: 39px;
+    cursor: pointer;
+  }
+}
+
+.close {
+  border: none;
+  background-color: #de7575;
+  color: white;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: red;
+  }
+}
+
+.btn-create, .btn-cancel {
+  line-height: 20px;
+  padding: 5px;
+}

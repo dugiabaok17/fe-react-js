@@ -24,17 +24,13 @@
   },
   "menu": {
     "admin": {
-      "manage-user": "Users",
-      "manage-doctor": "Manage  doctors",
-      "manage-admin": "Quản lý admin",
-      "crud": "CRUD user",
-      "crud-redux": "CRUD user redux",
-      "clinic": "Clinics",
-      "manage-clinic": "Manage clinic",
-      "specialty": "Specialties",
-      "manage-specialty": "Manage specialties",
-      "handbook": "Handbook",
-      "manage-handbook": "Manage handbook"
+      "manage-staff": "Manage users",
+      "staff-list": "Staff list",
+      "store": "Manage store ",
+      "position": "Manage position",
+      "store-manage": "Crud store",
+      "staff-manage": "Crud staff",
+      "position-manage": "Crud position"
     }
   },
   "manage-user": {

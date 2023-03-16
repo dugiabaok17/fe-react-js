@@ -51,7 +51,7 @@ class UserRedux extends Component {
     console.log("check props", this.props);
     return (
       <div className="user-redux-container">
-        <div className="title">learn react-redux user redux hoi dan it</div>
+        <div className="title">learn react-redux user redux Aluminum</div>
         <div>{isLoadingGender === true ? "loading gender" : ""}</div>
         <div className="user-redux-body">
           <div className="container">

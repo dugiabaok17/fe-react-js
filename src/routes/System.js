@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import UserManage from "../containers/System/UserManage";
 import UserRedux from "../containers/System/Admin/UserRedux";
 import Header from "../containers/Header/Header";
+import StoreCrud from "../containers/System/Admin/StoreCrud";
 class System extends Component {
   render() {
     const { systemMenuPath, isLoggedIn } = this.props;
@@ -14,7 +15,9 @@ class System extends Component {
           <div className="system-list">
             <Switch>
               <Route path="/system/user-manage" component={UserManage} />
-              <Route path="/system/user-redux" component={UserRedux} />
+              <Route path="/system/staff-manage" component={UserRedux} />
+              <Route path="/system/store-manage" component={StoreCrud} />
+              <Route path="/system/position-manage" component={UserRedux} />
               <Route
                 component={() => {
                   return <Redirect to={systemMenuPath} />;

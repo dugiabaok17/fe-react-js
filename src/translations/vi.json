@@ -23,17 +23,13 @@
   },
   "menu": {
     "admin": {
-      "manage-user": "Người dùng",
-      "manage-doctor": "Quản lý bác sĩ",
-      "manage-admin": "Quản lý admin",
-      "crud": "CRUD user",
-      "crud-redux": "CRUD user redux",
-      "clinic": "Phòng khám",
-      "manage-clinic": "Quản lý phòng khám",
-      "specialty": "Chuyên khoa",
-      "manage-specialty": "Quản lý chuyên khoa",
-      "handbook": "Cẩm nang",
-      "manage-handbook": "Quản lý cẩm nang"
+      "manage-staff": "Quản lý nhàn viên",
+      "store":"Quản lý cửa hàng",
+      "position": "Quản lý chức vụ",
+      "store-manage": "Crud cửa hàng",
+      "staff-manage": "Crud nhân viên",
+      "position-manage": "Crud chức vụ",
+      "staff-list": "Danh sách nhân viên"
     }
   },
   "manage-user": {

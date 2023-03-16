@@ -1,60 +1,57 @@
 export const adminMenu = [
   {
     //quản lý người dùng
-    name: "menu.admin.manage-user",
+    name: "menu.admin.manage-staff",
     menus: [
       {
-        name: "menu.admin.crud",
+        name: "menu.admin.staff-manage",
+        link: "/system/staff-manage",
+      },
+      {
+        name: "menu.admin.staff-list",
         link: "/system/user-manage",
       },
-      {
-        name: "menu.admin.crud-redux",
-        link: "/system/user-redux",
-      },
-      {
-        name: "menu.admin.manage-doctor",
-        link: "/system/user-doctor",
-        // subMenus: [
-        //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
-        //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
-        // ]
-      },
+      // {
+      //   name: "menu.admin.crud",
+      //   link: "/system/user-manage",
+      // },
+      // {
+      //   name: "menu.admin.manage-doctor",
+      //   link: "/system/user-doctor",
+      //   // subMenus: [
+      //   //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
+      //   //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
+      //   // ]
+      // },
 
-      {
-        name: "menu.admin.manage-admin",
-        link: "/system/user-admin",
-      },
+      // {
+      //   name: "menu.admin.manage-admin",
+      //   link: "/system/user-admin",
+      // },
     ],
   },
-  {
-    //quản lý phòng khám
-    name: "menu.admin.clinic",
-    menus: [
-      {
-        name: "menu.admin.manage-clinic",
-        link: "/system/manage-clinic",
-      },
-    ],
-  },
+ 
+
+  
 
   {
-    //quản lý chuyên khoa
-    name: "menu.admin.specialty",
+    //quản lý store
+    name: "menu.admin.store",
     menus: [
       {
-        name: "menu.admin.manage-specialty",
-        link: "/system/manage-specialty",
+        name: "menu.admin.store-manage",
+        link: "/system/store-manage",
       },
     ],
   },
 
   {
-    //quản lý cẩm nang
-    name: "menu.admin.handbook",
+    //quản lý vai trò
+    name: "menu.admin.position",
     menus: [
       {
-        name: "menu.admin.manage-handbook",
-        link: "/system/manage-handbook",
+        name: "menu.admin.position-manage",
+        link: "/system/position-manage",
       },
     ],
   },

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./UserManage.scss";
 import { getAllStoreName } from "../../services/storeService";
+import { getAllPositionName } from "../../services/positionService";
 class ModalUser extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +30,7 @@ class ModalUser extends Component {
 
       positionName: "",
       arrStoreName: [],
+      arrPositionName: [],
     };
   }
 
@@ -74,10 +76,40 @@ class ModalUser extends Component {
 
   async componentDidMount() {
     let response = await getAllStoreName();
-    this.setState({
-      arrStoreName: response,
-    });
-    console.log(response);
+    let positionNameResponse = await getAllPositionName();
+    console.log("re-render")
+    if (this.props.title === "Update staff") {
+      this.setState({
+        arrStoreName: response,
+        arrPositionName: positionNameResponse,
+        name: this.props.currentUser.name,
+
+        middleName: this.props.currentUser.middleName,
+
+        surname: this.props.currentUser.surname,
+
+        gender: this.props.currentUser.gender,
+
+        dateOfBirth: this.props.currentUser.dateOfBirth,
+
+        address: this.props.currentUser.address,
+
+        phoneNumber: this.props.currentUser.phoneNumber,
+
+        email: this.props.currentUser.email,
+
+        status: 1,
+
+        storeName: this.props.currentUser.storeName,
+
+        positionName: this.props.currentUser.positionName,
+      });
+    } else {
+      this.setState({
+        arrStoreName: response,
+        arrPositionName: positionNameResponse,
+      });
+    }
   }
 
   handleAddNewUser = () => {
@@ -87,41 +119,43 @@ class ModalUser extends Component {
       console.log("check at modelUser", this.state);
       this.props.createNewUser(this.state);
     }
-    if (isValid && this.props.isOpen) {
-      this.setState({
-        name: "",
+    // if (isValid && this.props.isOpen) {
+    //   this.setState({
+    //     name: "",
 
-        middleName: "",
+    //     middleName: "",
 
-        surname: "",
+    //     surname: "",
 
-        gender: "",
+    //     gender: "",
 
-        dateOfBirth: "",
+    //     dateOfBirth: "",
 
-        address: "",
+    //     address: "",
 
-        phoneNumber: "",
+    //     phoneNumber: "",
 
-        email: "",
+    //     email: "",
 
-        storeName: "",
+    //     storeName: "",
 
-        positionName: "",
-      });
-    }
+    //     positionName: "",
+    //   });
+    // }
   };
 
   render() {
     let arrGender = this.state.arrStoreName;
-    console.log("check store name",this.state.storeName)
+    let arrPosition = this.state.arrPositionName;
     return (
       <Modal
         isOpen={this.props.isOpen}
         toggle={this.props.toggleParent}
         size="lg"
       >
-        <ModalHeader toggle={this.props.toggleParent}>Modal title</ModalHeader>
+        <ModalHeader toggle={this.props.toggleParent}>
+          {this.props.title}
+        </ModalHeader>
         <ModalBody>
           <div className="container">
             <div className="row">
@@ -233,6 +267,7 @@ class ModalUser extends Component {
               <div className="col-md-6">
                 <label className="form-label mt-3">Store name</label>
                 <select
+                  value={this.state.storeName}
                   id="inputState"
                   className="form-control"
                   onChange={(e) => {
@@ -243,17 +278,16 @@ class ModalUser extends Component {
                 >
                   {arrGender &&
                     arrGender.length > 0 &&
-                    arrGender.map((data, index) => 
-                      {
-                        return <option key={index}>{data.storeName}</option>
-                      }      
-                    )}
+                    arrGender.map((data, index) => {
+                      return <option key={index}>{data.storeName}</option>;
+                    })}
                 </select>
               </div>
 
               <div className="col-md-6">
                 <label className="form-label mt-3">Position</label>
                 <select
+                  value={this.state.positionName}
                   id="inputState"
                   className="form-control"
                   onChange={(e) => {
@@ -262,14 +296,21 @@ class ModalUser extends Component {
                     });
                   }}
                 >
-                  <option value="Staff">Nhân viên</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Customer">Khách hàng</option>
+                  {arrPosition &&
+                    arrPosition.length > 0 &&
+                    arrPosition.map((data, index) => {
+                      return (
+                        <option  key={index}>
+                          {data.name}
+                        </option>
+                      );
+                    })}
                 </select>
               </div>
               <div className="col-6 form-group custom-location-icons">
                 <label className="form-label mt-3">Gender</label>
                 <select
+                  value={this.state.gender}
                   id="inputState"
                   className="form-control"
                   onChange={(e) => {
@@ -291,7 +332,7 @@ class ModalUser extends Component {
             color="primary"
             onClick={this.handleAddNewUser}
           >
-            Create
+            Save
           </Button>
           <Button
             className="btn-cancel"

@@ -13,6 +13,9 @@ class UserManage extends Component {
     this.state = {
       arrUsers: [],
       isOpenModalUser: false,
+      dataUpdate: [],
+      title: "",
+      isOpenModel: false
     };
   }
 
@@ -35,25 +38,29 @@ class UserManage extends Component {
   handleAddNewUser = () => {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
+      isOpenModel: !this.state.isOpenModel,
+      title: "Add new staff"
     });
   };
 
   toggle = () => {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
+      isOpenModel: !this.state.isOpenModel
     });
   };
 
   createNewUser = async (data) => {
+    console.log("log data user manager",data)
     try {
       let response = await createNewUser(data);
-      console.log("check ", response);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
         await this.getAllUsersFromReact();
         this.setState({
           isOpenModalUser: false,
+          isOpenModel: false
         });
       }
     } catch (error) {
@@ -63,7 +70,7 @@ class UserManage extends Component {
 
   handleDelUser = async (data) => {
     try {
-      let res = await delUser(data.id);
+      let res = await delUser(data);
       if (res && res.errCode === 0) {
         this.getAllUsersFromReact();
       } else {
@@ -75,16 +82,30 @@ class UserManage extends Component {
     }
   };
 
+  handleUpdate =  (id,data) => {
+    console.log("log data",data)
+    this.setState({
+      isOpenModalUser: !this.state.isOpenModalUser,
+      dataUpdate: data,
+      title: "Update staff",
+      isOpenModel: !this.state.isOpenModel
+    });
+    console.log("check open modal",this.state.isOpenModel)
+    console.log("check open modal user",this.state.isOpenModalUser)
+  }
+
   render() {
     let arrUsers = this.state.arrUsers;
     return (
       <div className="users-container">
-        <ModalUser
+      {this.state.isOpenModel &&  <ModalUser
+          currentUser= {this.state.dataUpdate}
           isOpen={this.state.isOpenModalUser}
-          test="abc"
+          title = {this.state.title}
           toggleParent={this.toggle}
           createNewUser={this.createNewUser}
-        />
+          isOpenModel = {this.state.isOpenModel}
+        />}
         <h1 className="mt-3 text-center">Manage users with Aluminum</h1>
         <div className="container">
           <div className="">
@@ -102,6 +123,9 @@ class UserManage extends Component {
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
                 <th scope="col">Phone Number</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Position</th>
+                <th scope="col">Birthday</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -114,13 +138,17 @@ class UserManage extends Component {
                       <td className="column-data-user">{`${item.surname} ${item.middleName} ${item.name}`}</td>
                       <td className="column-data-user">{item.address}</td>
                       <td className="column-data-user">{item.phoneNumber}</td>
+                      <td className="column-data-user">{item.gender}</td>
+                      <td className="column-data-user">{item.positionName}</td>
+                      <td className="column-data-user">{item.dateOfBirth}</td>
+
                       <td className="colum-data-user">
-                        <button className="btn-edit me-2">
+                        <button className="btn-edit me-2" onClick={() => this.handleUpdate(item.id,item)}>
                           <i className="far fa-edit item-edit"></i>
                         </button>
 
                         <button
-                          onClick={ () => window.confirm("do you want delete") && this.handleDelUser(item)}
+                          onClick={ () => window.confirm("do you want delete") && this.handleDelUser(item.id)}
                           className="btn-del"
                         >
                           <i className="far fa-trash-alt item-del"></i>

@@ -1,5 +1,4 @@
 import axios from "../axios";
-import hello from "axios";
 
 const handleLoginApi = (email, password) => {
   return axios.post("/api/login", {
@@ -16,8 +15,11 @@ const createNewUser = async (data) => {
     return await axios.post("api/v1/staff", data);
 };
 
+const updateNewUser = async (data) => {
+  return await axios.post(`api/v1/staff/${data.id}`, data);
+};
 const delUser = (id) => {
-  return axios.delete(`/api/v1/staff/${id}`);
+  return axios.put(`/api/v1/staff/status/${id}`);
 };
 const getAllCodeService = (inputData) => {
   return axios.get(`/all-codes?type=${inputData}`);

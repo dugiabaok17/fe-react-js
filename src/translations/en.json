@@ -25,7 +25,7 @@
   "menu": {
     "admin": {
       "manage-staff": "Manage users",
-      "staff-list": "Staff list",
+      "crud-staff": "Crud Staff",
       "store": "Manage store ",
       "position": "Manage position",
       "store-manage": "Crud store",

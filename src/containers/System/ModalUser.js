@@ -77,7 +77,7 @@ class ModalUser extends Component {
   async componentDidMount() {
     let response = await getAllStoreName();
     let positionNameResponse = await getAllPositionName();
-    console.log("re-render")
+    console.log("re-render",this.props.currentUser);
     if (this.props.title === "Update staff") {
       this.setState({
         arrStoreName: response,
@@ -114,34 +114,14 @@ class ModalUser extends Component {
 
   handleAddNewUser = () => {
     let isValid = this.checkValidateInput();
-    console.log("check validate0", isValid);
     if (isValid === true) {
-      console.log("check at modelUser", this.state);
-      this.props.createNewUser(this.state);
+      if (this.props.title === "Update staff") {
+        console.log("vào dây nè hehe")
+        this.props.updateUser(this.props.currentUser.id,this.state);
+      } else {
+        this.props.createNewUser(this.state);
+      }
     }
-    // if (isValid && this.props.isOpen) {
-    //   this.setState({
-    //     name: "",
-
-    //     middleName: "",
-
-    //     surname: "",
-
-    //     gender: "",
-
-    //     dateOfBirth: "",
-
-    //     address: "",
-
-    //     phoneNumber: "",
-
-    //     email: "",
-
-    //     storeName: "",
-
-    //     positionName: "",
-    //   });
-    // }
   };
 
   render() {
@@ -162,6 +142,7 @@ class ModalUser extends Component {
               <div className="col-6 form-group">
                 <label className="form-label">Email</label>
                 <input
+                  disabled={this.props.title === "Update staff" ? true : false}
                   onChange={(e) =>
                     this.setState({
                       email: e.target.value,
@@ -299,11 +280,7 @@ class ModalUser extends Component {
                   {arrPosition &&
                     arrPosition.length > 0 &&
                     arrPosition.map((data, index) => {
-                      return (
-                        <option  key={index}>
-                          {data.name}
-                        </option>
-                      );
+                      return <option key={index}>{data.name}</option>;
                     })}
                 </select>
               </div>

@@ -5,6 +5,7 @@ import {
   getAllUsers,
   createNewUser,
   delUser,
+  updateNewUser
 } from "../../services/userService";
 import ModalUser from "./ModalUser";
 class UserManage extends Component {
@@ -15,7 +16,7 @@ class UserManage extends Component {
       isOpenModalUser: false,
       dataUpdate: [],
       title: "",
-      isOpenModel: false
+      isOpenModel: false,
     };
   }
 
@@ -25,9 +26,6 @@ class UserManage extends Component {
 
   getAllUsersFromReact = async () => {
     let response = await getAllUsers("ALL");
-    console.log("check response getAllUsers ", response);
-    // console.log('check data staff',response)
-    // console.log('check data staff first name',response[0].firstName)
     if (response) {
       this.setState({
         arrUsers: response,
@@ -39,19 +37,19 @@ class UserManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       isOpenModel: !this.state.isOpenModel,
-      title: "Add new staff"
+      title: "Add new staff",
     });
   };
 
   toggle = () => {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
-      isOpenModel: !this.state.isOpenModel
+      isOpenModel: !this.state.isOpenModel,
     });
   };
 
   createNewUser = async (data) => {
-    console.log("log data user manager",data)
+    console.log("log data user manager", data);
     try {
       let response = await createNewUser(data);
       if (response && response.errCode !== 0) {
@@ -60,7 +58,26 @@ class UserManage extends Component {
         await this.getAllUsersFromReact();
         this.setState({
           isOpenModalUser: false,
-          isOpenModel: false
+          isOpenModel: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  updateUser = async (id,data) => {
+    console.log("log data user manager", data);
+    console.log(id)
+    try {
+      let response = await updateNewUser(id,data);
+      if (response && response.errCode !== 0) {
+        alert(response.message);
+      } else {
+        await this.getAllUsersFromReact();
+        this.setState({
+          isOpenModalUser: false,
+          isOpenModel: false,
         });
       }
     } catch (error) {
@@ -82,30 +99,31 @@ class UserManage extends Component {
     }
   };
 
-  handleUpdate =  (id,data) => {
-    console.log("log data",data)
+  handleUpdate = (id,data) => {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       dataUpdate: data,
       title: "Update staff",
-      isOpenModel: !this.state.isOpenModel
+      isOpenModel: !this.state.isOpenModel,
     });
-    console.log("check open modal",this.state.isOpenModel)
-    console.log("check open modal user",this.state.isOpenModalUser)
-  }
+  
+  };
 
   render() {
     let arrUsers = this.state.arrUsers;
     return (
       <div className="users-container">
-      {this.state.isOpenModel &&  <ModalUser
-          currentUser= {this.state.dataUpdate}
-          isOpen={this.state.isOpenModalUser}
-          title = {this.state.title}
-          toggleParent={this.toggle}
-          createNewUser={this.createNewUser}
-          isOpenModel = {this.state.isOpenModel}
-        />}
+        {this.state.isOpenModel && (
+          <ModalUser
+            currentUser={this.state.dataUpdate}
+            isOpen={this.state.isOpenModalUser}
+            title={this.state.title}
+            toggleParent={this.toggle}
+            createNewUser={this.createNewUser}
+            updateUser = {this.updateUser}
+            isOpenModel={this.state.isOpenModel}
+          />
+        )}
         <h1 className="mt-3 text-center">Manage users with Aluminum</h1>
         <div className="container">
           <div className="">
@@ -119,13 +137,13 @@ class UserManage extends Component {
           <table className="table text-center">
             <thead>
               <tr>
+                
                 <th scope="col">Email</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Position</th>
-                <th scope="col">Birthday</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -140,15 +158,20 @@ class UserManage extends Component {
                       <td className="column-data-user">{item.phoneNumber}</td>
                       <td className="column-data-user">{item.gender}</td>
                       <td className="column-data-user">{item.positionName}</td>
-                      <td className="column-data-user">{item.dateOfBirth}</td>
 
                       <td className="colum-data-user">
-                        <button className="btn-edit me-2" onClick={() => this.handleUpdate(item.id,item)}>
+                        <button
+                          className="btn-edit me-2"
+                          onClick={() => this.handleUpdate(item.id, item)}
+                        >
                           <i className="far fa-edit item-edit"></i>
                         </button>
 
                         <button
-                          onClick={ () => window.confirm("do you want delete") && this.handleDelUser(item.id)}
+                          onClick={() =>
+                            window.confirm("do you want delete") &&
+                            this.handleDelUser(item.id)
+                          }
                           className="btn-del"
                         >
                           <i className="far fa-trash-alt item-del"></i>

@@ -15,8 +15,8 @@ const createNewUser = async (data) => {
     return await axios.post("api/v1/staff", data);
 };
 
-const updateNewUser = async (data) => {
-  return await axios.post(`api/v1/staff/${data.id}`, data);
+const updateNewUser = async (id,data) => {
+  return await axios.put(`api/v1/staff/${id}`, data);
 };
 const delUser = (id) => {
   return axios.put(`/api/v1/staff/status/${id}`);
@@ -30,4 +30,5 @@ export {
   createNewUser,
   delUser,
   getAllCodeService,
+  updateNewUser
 };

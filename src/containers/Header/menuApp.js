@@ -3,12 +3,12 @@ export const adminMenu = [
     //quản lý người dùng
     name: "menu.admin.manage-staff",
     menus: [
+      // {
+      //   name: "menu.admin.staff-manage",
+      //   link: "/system/staff-manage",
+      // },
       {
-        name: "menu.admin.staff-manage",
-        link: "/system/staff-manage",
-      },
-      {
-        name: "menu.admin.staff-list",
+        name: "menu.admin.crud-staff",
         link: "/system/user-manage",
       },
       // {

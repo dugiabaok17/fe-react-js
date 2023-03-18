@@ -29,7 +29,7 @@
       "store-manage": "Crud cửa hàng",
       "staff-manage": "Crud nhân viên",
       "position-manage": "Crud chức vụ",
-      "staff-list": "Danh sách nhân viên"
+      "crud-staff": "Crud Nhân viên"
     }
   },
   "manage-user": {

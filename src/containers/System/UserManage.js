@@ -137,7 +137,7 @@ class UserManage extends Component {
           <table className="table text-center">
             <thead>
               <tr>
-                
+                <th scope="col">STT</th>
                 <th scope="col">Email</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
@@ -152,6 +152,7 @@ class UserManage extends Component {
                 arrUsers.map((item, index) => {
                   return (
                     <tr key={index} className="lh-lg">
+                      <th scope="col">{index}</th>
                       <td className="column-data-user">{item.email}</td>
                       <td className="column-data-user">{`${item.surname} ${item.middleName} ${item.name}`}</td>
                       <td className="column-data-user">{item.address}</td>

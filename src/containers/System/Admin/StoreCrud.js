@@ -1,68 +1,191 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import * as actions from "../../../store/actions";
-import {createStore}  from "../../../services/storeService";
-class UserRedux extends Component {
+import "../UserManage.scss";
+import { getAllStore, createStore , updateStore, delStore} from "../../../services/storeService";
+import ModalUser from "../ModalCommon";
+class StoreManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrGender: [],
-      arrPosition: [],
-      arrRole: [],
+      arrStore: [],
+      isOpenModalUser: false,
+      dataUpdate: [],
+      title: "",
+      isOpenModel: false,
     };
   }
 
-  createStore = async () => {
-    let response = await createStore();
-    console.log(response)
+  async componentDidMount() {
+    await this.getAllStore();
   }
-   componentDidMount() {
-  
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    
-  }
+
+  getAllStore = async () => {
+    let response = await getAllStore();
+    console.log("check response", response);
+    if (response) {
+      this.setState({
+        arrStore: response,
+      });
+    }
+  };
+
+  handleAddNewUser = () => {
+    this.setState({
+      isOpenModalUser: !this.state.isOpenModalUser,
+      isOpenModel: !this.state.isOpenModel,
+      title: "Add new store",
+    });
+  };
+
+  toggle = () => {
+    this.setState({
+      isOpenModalUser: !this.state.isOpenModalUser,
+      isOpenModel: !this.state.isOpenModel,
+    });
+  };
+
+  createStore = async (data) => {
+    try {
+      let response = await createStore(data);
+      console.log(response);
+      if (response && response.errCode !== 0) {
+        alert(response.message);
+      } else {
+        await this.getAllStore();
+        this.setState({
+          isOpenModalUser: false,
+          isOpenModel: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  updateStore = async (id,data) => {
+    console.log("log data user manager", data);
+    console.log(id)
+    try {
+      let response = await updateStore(id,data);
+      if (response && response.errCode !== 0) {
+        alert(response.message);
+      } else {
+        await this.getAllStore();
+        this.setState({
+          isOpenModalUser: false,
+          isOpenModel: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleDelUser = async (data) => {
+    try {
+      let res = await delStore(data);
+      if (res && res.errCode === 0) {
+        this.getAllStore();
+      } else {
+        alert(res.message);
+      }
+      this.getAllStore();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleUpdate = (id,data) => {
+    this.setState({
+      isOpenModalUser: !this.state.isOpenModalUser,
+      dataUpdate: data,
+      title: "Update store",
+      isOpenModel: !this.state.isOpenModel,
+    });
+
+  };
 
   render() {
-    
+    let arrStore = this.state.arrStore;
     return (
+      <div className="users-container">
+        {this.state.isOpenModel && (
+          <ModalUser
+            currentUser={this.state.dataUpdate}
+            isOpen={this.state.isOpenModalUser}
+            title={this.state.title}
+            toggleParent={this.toggle}
+            createNewStore={this.createStore}
+            updateStore={this.updateStore}
+            isOpenModel={this.state.isOpenModel}
+          />
+        )}
+        <h1 className="mt-3 text-center">Manage store with Aluminum</h1>
+        <div className="container">
+          <div className="">
+            <button
+              className="btn btn-primary px-2"
+              onClick={() => this.handleAddNewUser()}
+            >
+              <i className="fas fa-plus pe-1"></i> Add new store
+            </button>
+          </div>
+          <table className="table text-center">
+            <thead>
+              <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">Nation</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {arrStore &&
+                arrStore.map((item, index) => {
+                  return (
+                    <tr key={index} className="lh-lg">
+                      <th scope="col">{index + 1}</th>
+                      <td className="column-data-user">{item.name}</td>
+                      <td className="column-data-user">{item.address}</td>
+                      <td className="column-data-user">{item.city}</td>
+                      <td className="column-data-user">{item.nation}</td>
+                      <td className="colum-data-user">
+                        <button
+                          className="btn-edit me-2"
+                          onClick={() => this.handleUpdate(item.id, item)}
+                        >
+                          <i className="far fa-edit item-edit"></i>
+                        </button>
 
-       <div className="container">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputEmail4">City</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email"/>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Name</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputAddress">Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"/>
-            </div>
-            <div class="form-group">
-              <label for="inputAddress2">Nation</label>
-              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"/>
-            </div>
-            <button type="submit" class="btn btn-primary" onClick={()=> this.createStore()}>Sign in</button>
-       </div>
+                        <button
+                          onClick={() =>
+                            window.confirm("do you want delete") &&
+                            this.handleDelUser(item.id)
+                          }
+                          className="btn-del"
+                        >
+                          <i className="far fa-trash-alt item-del"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
- 
-  };
+  return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);
+export default connect(mapStateToProps, mapDispatchToProps)(StoreManage);

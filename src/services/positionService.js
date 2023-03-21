@@ -1,20 +1,28 @@
-import axios from '../axios';
+import axios from "../axios";
 
-const createStore = () => {
-
-    return axios.post("/api/v1/store",{
-        "name": "Clothes store ha noi",
-        "address": "Hn",
-        "city": "Hn",
-        "nation": "USA"
-    })
+const createPosition = (data) => {
+  return axios.post("/api/v1/position", data);
 };
 
-const getAllPositionName = () => {
-    return axios.get("/api/v1/position/name")
-}
+const getAllPosition = () => {
+  return axios.get("/api/v1/position");
+};
 
+const getAllPositionName = (data) => {
+  return axios.get("/api/v1/position/name", data);
+};
+
+const deletePosition = (id) => {
+  return axios.delete(`/api/v1/position/${id}`);
+};
+
+const updatePosition = (id, data) => {
+  return axios.put(`/api/v1/position/${id}`, data);
+};
 export {
-createStore,
-getAllPositionName
+  createPosition,
+  getAllPositionName,
+  getAllPosition,
+  deletePosition,
+  updatePosition,
 };

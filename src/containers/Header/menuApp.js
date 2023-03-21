@@ -55,4 +55,45 @@ export const adminMenu = [
       },
     ],
   },
+
+  {
+    //quản lý khách hàng
+    name: "menu.admin.customer",
+    menus: [
+      {
+        name: "menu.admin.customer-manage",
+        link: "/system/customer-manage",
+      },
+    ],
+  },
+
+  {
+    //quản lý product
+    name: "menu.admin.product",
+    menus: [
+      {
+        name: "menu.admin.product-manage",
+        link: "/system/product-manage",
+      },
+      {
+        name: "menu.admin.color-manage",
+        link: "/system/color-manage",
+      },
+
+      {
+        name: "menu.admin.producer-manage",
+        link: "/system/producer-manage",
+      },
+
+      {
+        name: "menu.admin.category-manage",
+        link: "/system/category-manage",
+      },
+
+      {
+        name: "menu.admin.product-details-manage",
+        link: "/system/product-details-manage",
+      },
+    ],
+  },
 ];

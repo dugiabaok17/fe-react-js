@@ -30,7 +30,15 @@
       "position": "Manage position",
       "store-manage": "Crud store",
       "staff-manage": "Crud staff",
-      "position-manage": "Crud position"
+      "position-manage": "Crud position",
+      "color-manage": "Crud color",
+      "product": "Manage product",
+      "product-manage": "Crud product",
+       "producer-manage": "Crud producer",
+       "category-manage": "Crud category",
+       "product-details-manage": "Crud product details",
+       "customer": "Manage customer",
+       "customer-manage": "Crud customer"
     }
   },
   "manage-user": {

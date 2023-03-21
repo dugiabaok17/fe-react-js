@@ -29,7 +29,16 @@
       "store-manage": "Crud cửa hàng",
       "staff-manage": "Crud nhân viên",
       "position-manage": "Crud chức vụ",
-      "crud-staff": "Crud Nhân viên"
+      "crud-staff": "Crud Nhân viên",
+      "color-manage": "Crud màu sắc",
+      "product": "Quản lý sản phầm",
+      "product-manage": "Crud sản phẩm",
+       "producer-manage": "Crud quản lý NSX",
+       "category-manage": "Crud dòng sản phẩm",
+       "product-details-manage": "Crud chi tiết sản phầm",
+       "customer": "Quản lý khách hàng",
+       "customer-manage": "Crud khách hàng"
+      
     }
   },
   "manage-user": {

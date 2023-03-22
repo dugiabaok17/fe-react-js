@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../UserManage.scss";
-import { getAllColor, createColor,updateColor, delColor} from "../../../services/colorService";
-import ModalUser from "./ModalColor";
-class ColorManage extends Component {
+import {
+  getAllUsers,
+  createNewUser,
+  delUser,
+  getAllCodeService,
+  updateNewUser
+} from "../../../services/productDetailsService";
+import ModalUser from "./ModalProductDetails";
+class UserManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrStore: [],
+      arrUsers: [],
       isOpenModalUser: false,
       dataUpdate: [],
       title: "",
@@ -16,15 +22,14 @@ class ColorManage extends Component {
   }
 
   async componentDidMount() {
-    await this.getAllColor();
+    await this.getAllUsersFromReact();
   }
 
-  getAllColor = async () => {
-    let response = await getAllColor();
-    console.log("check response", response);
+  getAllUsersFromReact = async () => {
+    let response = await getAllUsers("ALL");
     if (response) {
       this.setState({
-        arrStore: response,
+        arrUsers: response,
       });
     }
   };
@@ -33,7 +38,7 @@ class ColorManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       isOpenModel: !this.state.isOpenModel,
-      title: "Add new color",
+      title: "Add new staff",
     });
   };
 
@@ -44,14 +49,14 @@ class ColorManage extends Component {
     });
   };
 
-  createColor = async (data) => {
+  createNewUser = async (data) => {
+    console.log("log data user manager", data);
     try {
-      let response = await createColor(data);
-      console.log(response);
+      let response = await createNewUser(data);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
-        await this.getAllColor();
+        await this.getAllUsersFromReact();
         this.setState({
           isOpenModalUser: false,
           isOpenModel: false,
@@ -62,15 +67,15 @@ class ColorManage extends Component {
     }
   };
 
-  updatePosition = async (id,data) => {
+  updateUser = async (id,data) => {
     console.log("log data user manager", data);
     console.log(id)
     try {
-      let response = await updateColor(id,data);
+      let response = await updateNewUser(id,data);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
-        await this.getAllColor();
+        await this.getAllUsersFromReact();
         this.setState({
           isOpenModalUser: false,
           isOpenModel: false,
@@ -82,13 +87,14 @@ class ColorManage extends Component {
   };
 
   handleDelUser = async (data) => {
-    console.log(data)
     try {
-      let res = await delColor(data);
-      if (res && res.errCode !== 0) {
+      let res = await delUser(data);
+      if (res && res.errCode === 0) {
+        this.getAllUsersFromReact();
+      } else {
         alert(res.message);
-      } 
-      this.getAllColor();
+      }
+      this.getAllUsersFromReact();
     } catch (error) {
       console.log(error);
     }
@@ -98,14 +104,14 @@ class ColorManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       dataUpdate: data,
-      title: "Update color",
+      title: "Update staff",
       isOpenModel: !this.state.isOpenModel,
     });
-
+  
   };
 
   render() {
-    let arrStore = this.state.arrStore;
+    let arrUsers = this.state.arrUsers;
     return (
       <div className="users-container">
         {this.state.isOpenModel && (
@@ -114,19 +120,19 @@ class ColorManage extends Component {
             isOpen={this.state.isOpenModalUser}
             title={this.state.title}
             toggleParent={this.toggle}
-            createNewPosition={this.createColor}
-            updateStore={this.updatePosition}
+            createNewUser={this.createNewUser}
+            updateUser = {this.updateUser}
             isOpenModel={this.state.isOpenModel}
           />
         )}
-        <h1 className="mt-3 text-center">Manage color with Aluminum</h1>
+        <h1 className="mt-3 text-center">Manage product details with Aluminum</h1>
         <div className="container">
           <div className="">
             <button
               className="btn btn-primary px-2"
               onClick={() => this.handleAddNewUser()}
             >
-              <i className="fas fa-plus pe-1"></i> Add new color
+              <i className="fas fa-plus pe-1"></i> Add new product details
             </button>
           </div>
           <table className="table text-center">
@@ -134,16 +140,31 @@ class ColorManage extends Component {
               <tr>
                 <th scope="col">STT</th>
                 <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity in stock</th>
+                <th scope="col">Warranty near</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category name</th>
+                <th scope="col">Color name</th>
+                <th scope="col">Producer name</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {arrStore &&
-                arrStore.map((item, index) => {
+              {arrUsers &&
+                arrUsers.map((item, index) => {
                   return (
                     <tr key={index} className="lh-lg">
-                      <th scope="col">{index + 1}</th>
-                      <td className="column-data-user">{item.name}</td>
+                      <th scope="col">{index}</th>
+                      <td className="column-data-user">{item.productName}</td>
+                      <td className="column-data-user">{item.price}</td>
+                      <td className="column-data-user">{item.quantityInStock}</td>
+                      <td className="column-data-user">{item.warrantyYear}</td>
+                      <td className="column-data-user">{item.description}</td>
+                      <td className="column-data-user">{item.categoryName}</td>
+                      <td className="column-data-user">{item.colorName}</td>
+                      <td className="column-data-user">{item.producerName}</td>
+
                       <td className="colum-data-user">
                         <button
                           className="btn-edit me-2"
@@ -181,4 +202,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ColorManage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserManage);

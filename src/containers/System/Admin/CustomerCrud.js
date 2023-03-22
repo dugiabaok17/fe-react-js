@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../UserManage.scss";
-import { getAllColor, createColor,updateColor, delColor} from "../../../services/colorService";
-import ModalUser from "./ModalColor";
-class ColorManage extends Component {
+import { getAllPosition, createPosition,updatePosition, deletePosition} from "../../../services/customerService";
+import ModalUser from "./ModalCustomer";
+class StoreManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,11 +16,11 @@ class ColorManage extends Component {
   }
 
   async componentDidMount() {
-    await this.getAllColor();
+    await this.getAllPosition();
   }
 
-  getAllColor = async () => {
-    let response = await getAllColor();
+  getAllPosition = async () => {
+    let response = await getAllPosition();
     console.log("check response", response);
     if (response) {
       this.setState({
@@ -33,7 +33,7 @@ class ColorManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       isOpenModel: !this.state.isOpenModel,
-      title: "Add new color",
+      title: "Add new Customer",
     });
   };
 
@@ -44,14 +44,14 @@ class ColorManage extends Component {
     });
   };
 
-  createColor = async (data) => {
+  createPosition = async (data) => {
     try {
-      let response = await createColor(data);
+      let response = await createPosition(data);
       console.log(response);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
-        await this.getAllColor();
+        await this.getAllPosition();
         this.setState({
           isOpenModalUser: false,
           isOpenModel: false,
@@ -63,14 +63,13 @@ class ColorManage extends Component {
   };
 
   updatePosition = async (id,data) => {
-    console.log("log data user manager", data);
     console.log(id)
     try {
-      let response = await updateColor(id,data);
+      let response = await updatePosition(id,data);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
-        await this.getAllColor();
+        await this.getAllPosition();
         this.setState({
           isOpenModalUser: false,
           isOpenModel: false,
@@ -84,11 +83,11 @@ class ColorManage extends Component {
   handleDelUser = async (data) => {
     console.log(data)
     try {
-      let res = await delColor(data);
+      let res = await deletePosition(data);
       if (res && res.errCode !== 0) {
         alert(res.message);
       } 
-      this.getAllColor();
+      this.getAllPosition();
     } catch (error) {
       console.log(error);
     }
@@ -98,7 +97,7 @@ class ColorManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       dataUpdate: data,
-      title: "Update color",
+      title: "Update customer",
       isOpenModel: !this.state.isOpenModel,
     });
 
@@ -114,26 +113,31 @@ class ColorManage extends Component {
             isOpen={this.state.isOpenModalUser}
             title={this.state.title}
             toggleParent={this.toggle}
-            createNewPosition={this.createColor}
+            createNewPosition={this.createPosition}
             updateStore={this.updatePosition}
             isOpenModel={this.state.isOpenModel}
           />
         )}
-        <h1 className="mt-3 text-center">Manage color with Aluminum</h1>
+        <h1 className="mt-3 text-center">Manage customer with Aluminum</h1>
         <div className="container">
           <div className="">
             <button
               className="btn btn-primary px-2"
               onClick={() => this.handleAddNewUser()}
             >
-              <i className="fas fa-plus pe-1"></i> Add new color
+              <i className="fas fa-plus pe-1"></i> Add new customer
             </button>
           </div>
           <table className="table text-center">
             <thead>
               <tr>
                 <th scope="col">STT</th>
+                <th scope="col">Email</th>
                 <th scope="col">Name</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -143,7 +147,12 @@ class ColorManage extends Component {
                   return (
                     <tr key={index} className="lh-lg">
                       <th scope="col">{index + 1}</th>
-                      <td className="column-data-user">{item.name}</td>
+                      <td className="column-data-user">{item.email}</td>
+                      <td className="column-data-user">{`${item.surname} ${item.middleName} ${item.firstName}`}</td>
+                      <td className="column-data-user">{item.address}</td>
+                      <td className="column-data-user">{item.phoneNumber}</td>
+                      <td className="column-data-user">{item.gender}</td>
+                      <td className="column-data-user">{item.city}</td>
                       <td className="colum-data-user">
                         <button
                           className="btn-edit me-2"
@@ -181,4 +190,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ColorManage);
+export default connect(mapStateToProps, mapDispatchToProps)(StoreManage);

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../UserManage.scss";
-import { getAllColor, createColor,updateColor, delColor} from "../../../services/colorService";
-import ModalUser from "./ModalColor";
-class ColorManage extends Component {
+import { getAllPosition, createPosition,updatePosition, deletePosition} from "../../../services/producerService";
+import ModalUser from "./ModalProducer";
+class StoreManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,11 +16,11 @@ class ColorManage extends Component {
   }
 
   async componentDidMount() {
-    await this.getAllColor();
+    await this.getAllPosition();
   }
 
-  getAllColor = async () => {
-    let response = await getAllColor();
+  getAllPosition = async () => {
+    let response = await getAllPosition();
     console.log("check response", response);
     if (response) {
       this.setState({
@@ -33,7 +33,7 @@ class ColorManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       isOpenModel: !this.state.isOpenModel,
-      title: "Add new color",
+      title: "Add new producer",
     });
   };
 
@@ -44,14 +44,14 @@ class ColorManage extends Component {
     });
   };
 
-  createColor = async (data) => {
+  createPosition = async (data) => {
     try {
-      let response = await createColor(data);
+      let response = await createPosition(data);
       console.log(response);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
-        await this.getAllColor();
+        await this.getAllPosition();
         this.setState({
           isOpenModalUser: false,
           isOpenModel: false,
@@ -66,11 +66,11 @@ class ColorManage extends Component {
     console.log("log data user manager", data);
     console.log(id)
     try {
-      let response = await updateColor(id,data);
+      let response = await updatePosition(id,data);
       if (response && response.errCode !== 0) {
         alert(response.message);
       } else {
-        await this.getAllColor();
+        await this.getAllPosition();
         this.setState({
           isOpenModalUser: false,
           isOpenModel: false,
@@ -84,11 +84,11 @@ class ColorManage extends Component {
   handleDelUser = async (data) => {
     console.log(data)
     try {
-      let res = await delColor(data);
+      let res = await deletePosition(data);
       if (res && res.errCode !== 0) {
         alert(res.message);
       } 
-      this.getAllColor();
+      this.getAllPosition();
     } catch (error) {
       console.log(error);
     }
@@ -98,7 +98,7 @@ class ColorManage extends Component {
     this.setState({
       isOpenModalUser: !this.state.isOpenModalUser,
       dataUpdate: data,
-      title: "Update color",
+      title: "Update producer",
       isOpenModel: !this.state.isOpenModel,
     });
 
@@ -114,19 +114,19 @@ class ColorManage extends Component {
             isOpen={this.state.isOpenModalUser}
             title={this.state.title}
             toggleParent={this.toggle}
-            createNewPosition={this.createColor}
+            createNewPosition={this.createPosition}
             updateStore={this.updatePosition}
             isOpenModel={this.state.isOpenModel}
           />
         )}
-        <h1 className="mt-3 text-center">Manage color with Aluminum</h1>
+        <h1 className="mt-3 text-center">Manage producer with Aluminum</h1>
         <div className="container">
           <div className="">
             <button
               className="btn btn-primary px-2"
               onClick={() => this.handleAddNewUser()}
             >
-              <i className="fas fa-plus pe-1"></i> Add new color
+              <i className="fas fa-plus pe-1"></i> Add new producer
             </button>
           </div>
           <table className="table text-center">
@@ -181,4 +181,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ColorManage);
+export default connect(mapStateToProps, mapDispatchToProps)(StoreManage);

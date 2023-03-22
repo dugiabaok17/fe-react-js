@@ -27,7 +27,7 @@ class ModalUser extends Component {
 
   async componentDidMount() {
     console.log("re-render",this.props.currentUser);
-    if (this.props.title === "Update color") {
+    if (this.props.title === "Update product") {
       this.setState({
         name: this.props.currentUser.name,
       });
@@ -37,7 +37,7 @@ class ModalUser extends Component {
   handleAddNewUser = () => {
     let isValid = this.checkValidateInput();
     if (isValid === true) {
-      if (this.props.title === "Update color") {
+      if (this.props.title === "Update product") {
         console.log("vào dây nè hehe")
         this.props.updateStore(this.props.currentUser.id,this.state);
       } else {
@@ -60,7 +60,7 @@ class ModalUser extends Component {
           <div className="container">
             <div className="row">
               <div className="col form-group">
-                <label className="form-label">Color name</label>
+                <label className="form-label">Product name</label>
                 <input
                   // disabled={this.props.title === "Update store" ? true : false}
                   onChange={(e) =>

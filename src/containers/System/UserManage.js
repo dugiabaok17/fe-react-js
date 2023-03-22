@@ -49,7 +49,6 @@ class UserManage extends Component {
   };
 
   createNewUser = async (data) => {
-    console.log("log data user manager", data);
     try {
       let response = await createNewUser(data);
       if (response && response.errCode !== 0) {
@@ -67,8 +66,6 @@ class UserManage extends Component {
   };
 
   updateUser = async (id,data) => {
-    console.log("log data user manager", data);
-    console.log(id)
     try {
       let response = await updateNewUser(id,data);
       if (response && response.errCode !== 0) {
@@ -124,7 +121,7 @@ class UserManage extends Component {
             isOpenModel={this.state.isOpenModel}
           />
         )}
-        <h1 className="mt-3 text-center">Manage users with Aluminum</h1>
+        <h1 className="mt-3 text-center">Manage Staff with Aluminum</h1>
         <div className="container">
           <div className="">
             <button
